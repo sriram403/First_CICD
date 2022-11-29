@@ -1,0 +1,32 @@
+#WorkFlow Name 
+name : MyWorkFlow Name
+
+#Automatically run the workflow on everypush we do from here to github
+on:
+  push:
+      branches:[main]
+
+#Settingup a digital os for our digital pc
+jobs:
+  build:
+      runs-on: ubuntu-latest
+      steps:
+        - name : Checkout
+          uses : actions/checkout@v2
+
+          #Important part
+          #details about my app key app id app name (heroku)
+        - name : Build,Push and Release a docker container to heroku.
+          uses : gonuit/heroku-docker-deploy@v1.3.3 # GitHub action name (leave it as it is). created by someone 
+          with : 
+            email: ${{secret.HEROKU_EMAIL}}
+            heroku_api_key: ${{secret.HEROKU_API_KEY}}
+            heroku_api_name: ${{secret.HEROKU_API_NAME}}
+
+            #docker file directory and other info which used to run our code 
+            dockerfile_directory: ./
+            dockerfile_name: Dockerfile
+            docker_options: "--no-cache"
+
+            #process type for the docker container to be uploaded
+            process_type: web
