@@ -4,7 +4,7 @@ name : MyWorkFlow Name
 #Automatically run the workflow on everypush we do from here to github
 on:
   push:
-      branches:[main]
+      branches: [main]
 
 #Settingup a digital os for our digital pc
 jobs:
