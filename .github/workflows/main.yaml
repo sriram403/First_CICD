@@ -19,9 +19,9 @@ jobs:
         - name : Build,Push and Release a docker container to heroku.
           uses : gonuit/heroku-docker-deploy@v1.3.3 # GitHub action name (leave it as it is). created by someone 
           with : 
-            email: ${{secret.HEROKU_EMAIL}}
-            heroku_api_key: ${{secret.HEROKU_API_KEY}}
-            heroku_api_name: ${{secret.HEROKU_API_NAME}}
+            email: ${{secrets.HEROKU_EMAIL}}
+            heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+            heroku_api_name: ${{secrets.HEROKU_API_NAME}}
 
             #docker file directory and other info which used to run our code 
             dockerfile_directory: ./
