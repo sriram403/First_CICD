@@ -21,7 +21,7 @@ jobs:
           with : 
             email: ${{secrets.HEROKU_EMAIL}}
             heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-            heroku_api_name: ${{secrets.HEROKU_API_NAME}}
+            heroku_api_name: ${{secrets.HEROKU_APP_NAME}}
 
             #docker file directory and other info which used to run our code 
             dockerfile_directory: ./
