@@ -4,7 +4,7 @@ from housing.util.util import get_yaml_file
 from housing.constant import *
 from housing.exception import HousingException
 from housing.logger import logging
-import sys
+import os,sys
 
 
 class MyConfigurationInfo:
