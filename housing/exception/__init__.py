@@ -13,7 +13,11 @@ class HousingException(Exception):
         linenumber = exec_traceback.tb_lineno
         filename = exec_traceback.tb_frame.f_code.co_filename
 
-        message = f"Error is occured here DumbAss [{filename}]\n in the line [{linenumber}]\n the exception is [{error_message}]\n {'='*20}"
+        message = f"""
+        Error is occured here DumbAss [{filename}] 
+        in the line [{linenumber}]
+        the exception is [{error_message}]
+        """
         logging.info(message)
         return message
     
