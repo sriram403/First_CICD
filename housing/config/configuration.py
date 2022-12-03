@@ -8,7 +8,6 @@ import os,sys
 
 
 class MyConfigurationInfo:
-    
     def __init__(self,config_file_path:str = CONFIG_FILEPATH,current_time_stamp:str = CURRENT_TIMESTAMP) -> None:
         self.config_info = get_yaml_file(config_file_path)
         self.training_pipeline_config = self.get_modeltrainingpipeline_config()
