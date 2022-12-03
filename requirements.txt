@@ -1,3 +1,7 @@
 Flask
 gunicorn
--e .
+pyYAML
+pandas
+numpy
+scikit-learn 
+# -e .
