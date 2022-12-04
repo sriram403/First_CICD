@@ -4,7 +4,7 @@ from collections import namedtuple
 DataIntegrationConfig = namedtuple("DataIntegrationConfig",["download_url","zip_folder","extract_folder","train_dataset_folder","test_dataset_folder"])
 
 #using to store the path of the "file" which shows how much data columns and its data types are contained in the dataset
-DataValidationConfig = namedtuple("DataValidationConfig",["schema_file_path"])
+DataValidationConfig = namedtuple("DataValidationConfig",["schema_file_path","schema_report_path","report_page_file_path"])
 
 #using to store the path for all the transformed dataset and it's requirement like can we add bedroom
 DataTransformationConfig = namedtuple("DataTransformationConfig",["is_add_bedroom",
