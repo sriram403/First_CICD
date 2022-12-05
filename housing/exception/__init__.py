@@ -14,7 +14,7 @@ class HousingException(Exception):
         filename = exec_traceback.tb_frame.f_code.co_filename
 
         message = f"""
-        Error is occured here DumbAss [{filename}] 
+        Error is occured here DumbAss {filename}
         in the line [{linenumber}]
         the exception is [{error_message}]
         """

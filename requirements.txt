@@ -5,4 +5,5 @@ pandas
 numpy
 scikit-learn 
 matplotlib
+evidently
 # -e .

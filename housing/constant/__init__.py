@@ -8,7 +8,7 @@ CONFIG_FILENAME = "config.yaml"
 
 CONFIG_FILEPATH = os.path.join(ROOT_DIR,CONFIG_DIRECTORY,CONFIG_FILENAME)
 
-CURRENT_TIMESTAMP = f"{datetime.now().strftime('%Y-%M-%d_%H-%M-%S')}"#add f string if got any error
+CURRENT_TIMESTAMP = f"{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}"#add f string if got any error
 
 #its info is on the config folder config.yaml
 TRAINING_PIPELINE_CONFIG_KEY = "training_pipeline_config"

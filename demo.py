@@ -4,11 +4,11 @@ from housing.config.configuration import MyConfigurationInfo
 import sys
 def test():
     try : 
-        # pipeline = Pipeline()
-        # pipeline.run_pipeline()
-        i = MyConfigurationInfo()
-        v = i.get_datavalidation_config()
-        print(v)
+        pipeline = Pipeline()
+        pipeline.run_pipeline()
+    #     i = MyConfigurationInfo()
+    #     v = i.get_datavalidation_config()
+    #     print(v)
     except Exception as e:
         raise HousingException(e,sys) from e
 
