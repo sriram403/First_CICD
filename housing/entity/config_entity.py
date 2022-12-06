@@ -1,3 +1,4 @@
+# step - 0
 from collections import namedtuple
 
 #using to store the path for all the information nessasary to download the data,unziping the data,and so on... 

@@ -1,3 +1,4 @@
+#step -3
 from housing.entity.config_entity import DataIntegrationConfig,DataValidationConfig,DataTransformationConfig \
     ,ModelTrainerConfig,ModelEvaluationConfig,ModelPusherConfig,TrainingPipelineConfig
 from housing.util.util import get_yaml_file
@@ -64,8 +65,43 @@ class MyConfigurationInfo:
         except Exception as e:
             raise HousingException(e,sys) from e
     
-    def get_datatransformation_config()->DataTransformationConfig:
-        pass
+    def get_datatransformation_config(self)->DataTransformationConfig:
+        try:
+            artifact_dir = self.training_pipeline_config.artifact_dir
+
+            data_transformation_artifact_dir= os.path.join(artifact_dir,DATA_TRANSFORMATION_ARTIFACT_DIR,CURRENT_TIMESTAMP)
+
+            data_tranformation_config_info = self.config_info[DATA_TRANSFORMATION_CONFIG_KEY]
+
+            bedroom_per_room = data_tranformation_config_info[DATA_TRANSFORMATION_ADD_BEDROOM_PER_ROOM_KEY]
+            
+            preprocessed_object_file_path = os.path.join(
+                data_transformation_artifact_dir,
+                data_tranformation_config_info[DATA_TRANSFORMATION_PREPROCESSING_DIR_KEY],
+                data_tranformation_config_info[DATA_TRANSFORMATION_PREPROCESSED_FILE_NAME_KEY],
+            )
+            tranformed_train_dir = os.path.join(
+                data_transformation_artifact_dir,
+                data_tranformation_config_info[DATA_TRANSFORAMTION_DIR_NAME_KEY],
+                data_tranformation_config_info[DATA_TRANSFORMATION_TRAIN_DIR_NAME_KEY]
+            )
+            tranformed_test_dir =os.path.join(
+                data_transformation_artifact_dir,
+                data_tranformation_config_info[DATA_TRANSFORAMTION_DIR_NAME_KEY],
+                data_tranformation_config_info[DATA_TRANSFORMATION_TEST_DIR_NAME_KEY]
+            )
+
+            data_transformation_config = DataTransformationConfig(
+                bedroom_per_room,
+                tranformed_train_dir,
+                tranformed_test_dir,
+                preprocessed_object_file_path)
+            logging.info(f"created data_transformation_config {data_transformation_config}")
+            
+            return data_transformation_config
+
+        except Exception as e:
+            raise HousingException(e,sys) from e
     
     def get_modeltrainer_config()->ModelTrainerConfig:
         pass
