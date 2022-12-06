@@ -9,7 +9,19 @@ CONFIG_FILENAME = "config.yaml"
 
 CONFIG_FILEPATH = os.path.join(ROOT_DIR,CONFIG_DIRECTORY,CONFIG_FILENAME)
 
-CURRENT_TIMESTAMP = f"{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}"#add f string if got any error
+CURRENT_TIMESTAMP = f"{datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}"#add f string if got any error
+
+#datatransformation related variables
+COLUMN_TOTAL_ROOMS = "total_rooms"
+COLUMN_POPULATION = "population"
+COLUMN_HOUSEHOLDS = "households"
+COLUMN_TOTAL_BEDROOM = "total_bedrooms"
+DATASET_SCHEMA_COLUMNS_KEY = "columns"
+
+NUMERICAL_COLUMN_KEY = "numerical_columns"
+CATEGORICAL_COLUMN = "categorical_columns"
+TARGET_COLUMN_KEY ="target_column"
+
 
 #its info is on the config folder config.yaml
 TRAINING_PIPELINE_CONFIG_KEY = "training_pipeline_config"
