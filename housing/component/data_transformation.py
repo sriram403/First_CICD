@@ -11,7 +11,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.base import BaseEstimator,TransformerMixin
 from sklearn.preprocessing import OneHotEncoder
 from housing.constant import *
-from housing.util.util import get_yaml_file,save_numpy_array_data,save_object,load_data
+from housing.util.util import write_yaml_file,save_numpy_array_data,save_object,load_data,read_yaml_file
 from sklearn.impute import SimpleImputer
 
 
@@ -74,7 +74,7 @@ class DataTransformation:
         try:
             schema_file_path = self.data_validation_artifact.schema_file_path
 
-            dataset_schema = get_yaml_file(schema_file_path)
+            dataset_schema = read_yaml_file(schema_file_path)
 
             numerical_columns = dataset_schema[NUMERICAL_COLUMN_KEY]
             categorical_columns = dataset_schema[CATEGORICAL_COLUMN]
@@ -115,7 +115,7 @@ class DataTransformation:
             
             test_df = load_data(test_file_path,schema_file_path)
 
-            schema = get_yaml_file(schema_file_path)
+            schema = read_yaml_file(schema_file_path)
 
             target_column_name = schema[TARGET_COLUMN_KEY]
 

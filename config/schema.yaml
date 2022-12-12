@@ -34,6 +34,13 @@ domain_value:
   ocean_proximity:
     - <1H OCEAN
     - INLAND
-    - NEAR OCEAN
-    - NEAR BAY
     - ISLAND
+    - NEAR BAY
+    - NEAR OCEAN
+
+
+
+  
+
+
+

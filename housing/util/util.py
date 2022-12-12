@@ -3,9 +3,18 @@ from housing.exception import HousingException
 import os,sys,dill,numpy as np,pandas as pd
 from housing.constant import *
 
+def write_yaml_file(dir,data:dict = None):
+    try:
+        os.makedirs(os.path.dirname(dir),exist_ok=True)
+        with open(dir,"w") as yaml_file:
+            if data is not None:
+                yaml.dump(data,yaml_file)
+    except Exception as e:
+        raise HousingException(e,sys) from e
 
 
-def get_yaml_file(file_dir:str)->dict:
+
+def read_yaml_file(file_dir:str)->dict:
     """read the yaml file"""
     config_info = None
     try:
@@ -58,7 +67,7 @@ def load_object(file_path:str):
 # @staticmethod
 def load_data(file_path:str,schema_file_path:str)->pd.DataFrame:
     try:
-        dataset_schema = get_yaml_file(schema_file_path)
+        dataset_schema = read_yaml_file(schema_file_path)
 
         scheme = dataset_schema[DATASET_SCHEMA_COLUMNS_KEY]
 

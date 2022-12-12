@@ -1,7 +1,7 @@
 #step -3
 from housing.entity.config_entity import DataIntegrationConfig,DataValidationConfig,DataTransformationConfig \
     ,ModelTrainerConfig,ModelEvaluationConfig,ModelPusherConfig,TrainingPipelineConfig
-from housing.util.util import get_yaml_file
+from housing.util.util import *
 from housing.constant import *
 from housing.exception import HousingException
 from housing.logger import logging
@@ -10,7 +10,7 @@ import os,sys
 
 class MyConfigurationInfo:
     def __init__(self,config_file_path:str = CONFIG_FILEPATH,current_time_stamp:str = CURRENT_TIMESTAMP) -> None:
-        self.config_info = get_yaml_file(config_file_path)
+        self.config_info = read_yaml_file(config_file_path)
         self.training_pipeline_config = self.get_modeltrainingpipeline_config()
         self.time_stamp = current_time_stamp
     
@@ -103,11 +103,45 @@ class MyConfigurationInfo:
         except Exception as e:
             raise HousingException(e,sys) from e
     
-    def get_modeltrainer_config()->ModelTrainerConfig:
-        pass
+    def get_modeltrainer_config(self)->ModelTrainerConfig:
+        try:
+            artifact_dir = self.training_pipeline_config.artifact_dir
+
+            model_training_artifact_dir = os.path.join(artifact_dir,MODEL_TRAINER_ARTIFACT_DIR,self.time_stamp)
+            
+            model_training_config_info = self.config_info[MODEL_TRAINER_CONFIG_KEY]
+
+            trained_model_file_path = os.path.join(model_training_artifact_dir,
+                                                model_training_config_info[MODEL_TRAINER_TRAINED_MODEL_DIR_KEY],
+                                                model_training_config_info[MODEL_TRAINER_TRAINED_MODEL_FILE_NAME_KEY])
+
+            model_config_file_path = os.path.join(model_training_config_info[MODEL_TRAINER_MODEL_CONFIG_DIR_KEY],
+                                                model_training_config_info[MODEL_TRAINER_MODEL_CONFIG_FILE_NAME_KEY])
+
+            base_accuracy = model_training_config_info[MODEL_TRAINER_BASE_ACCURACY_KEY]
+
+            model_trainer_config = ModelTrainerConfig(trained_model_file_path,base_accuracy,model_config_file_path)
+            
+            logging.info(f"Model Trainer Config: {model_trainer_config}")
+            return model_trainer_config
+            
+        except Exception as e:
+            raise HousingException(e,sys) from e
     
-    def get_modelevaluation_config()->ModelEvaluationConfig:
-        pass
+    def get_modelevaluation_config(self)->ModelEvaluationConfig:
+        try:
+            model_evaluation_config = self.config_info[MODEL_EVALUATION_CONFIG_KEY]
+            
+            artifact_dir = os.path.join(self.training_pipeline_config.artifact_dir,MODEL_EVALUATION_ARTIFACT_DIR)
+
+            model_evaluation_file_path = os.path.join(artifact_dir,model_evaluation_config[MODEL_EVALUATION_FILE_NAME_KEY])
+            
+            response = ModelEvaluationConfig(model_evaluation_file_path,self.time_stamp)
+
+            logging.info(f"Model Evaluation Config :[{response}]")
+            return response
+        except Exception as e:
+            raise HousingException(e,sys) from e
     
     def get_modelpusher_config()->ModelPusherConfig:
         pass
