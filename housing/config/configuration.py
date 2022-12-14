@@ -17,7 +17,8 @@ class MyConfigurationInfo:
     def get_dataingestion_config(self)->DataIntegrationConfig:
         try:
             artifact_dir = self.training_pipeline_config.artifact_dir
-            data_ingestion_artifact_dir = os.path.join(artifact_dir,DATA_INGESTION_ARTIFACT_DIR,self.time_stamp)
+            stored_time_stamp = self.time_stamp
+            data_ingestion_artifact_dir = os.path.join(artifact_dir,DATA_INGESTION_ARTIFACT_DIR,stored_time_stamp)
             
             data_ingestion = self.config_info[DATA_INGESTION_CONFIG_KEY]
             
@@ -34,7 +35,8 @@ class MyConfigurationInfo:
                                                         zip_folder=dataset_extracting_dir,
                                                         extract_folder=dataset_rawdata_dir,
                                                         train_dataset_folder=dataset_train_dir,
-                                                        test_dataset_folder=dataset_test_dir)
+                                                        test_dataset_folder=dataset_test_dir,
+                                                        stored_time_var = stored_time_stamp)
             
             logging.info(f"Data Ingestion Created from Configuration:{data_ingestion_config}")
             
@@ -143,8 +145,19 @@ class MyConfigurationInfo:
         except Exception as e:
             raise HousingException(e,sys) from e
     
-    def get_modelpusher_config()->ModelPusherConfig:
-        pass
+    def get_modelpusher_config(self)->ModelPusherConfig:
+        try:
+            time_stamp = f"{datetime.now().strftime('%Y%m%d%H%M%S')}"
+            model_pusher_config_info = self.config_info[MODEL_PUSHER_CONFIG_KEY]
+            export_dir_path = os.path.join(ROOT_DIR, model_pusher_config_info[MODEL_PUSHER_MODEL_EXPORT_DIR_KEY],
+                                           time_stamp)
+
+            model_pusher_config = ModelPusherConfig(export_dir_path=export_dir_path)
+            logging.info(f"Model pusher config {model_pusher_config}")
+            return model_pusher_config
+
+        except Exception as e:
+            raise HousingException(e,sys) from e
     
     def get_modeltrainingpipeline_config(self)->TrainingPipelineConfig:
         try:

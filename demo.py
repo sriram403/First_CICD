@@ -2,19 +2,26 @@ from housing.pipeline.pipeline import Pipeline
 from housing.exception import HousingException
 from housing.config.configuration import MyConfigurationInfo
 
+
 from housing.component.data_transformation import DataTransformation
-import sys
+import sys,os
 def test():
     try : 
-        pipeline = Pipeline()
+        path = r"B:\jupyternotebook\mlboot\mlprojectpipelines\tutorial1\tutorial_project\config\config.yaml"
+        config_file_path = path
+        config_file_path
+        config = MyConfigurationInfo(config_file_path)
+        pipeline = Pipeline(config)
         pipeline.run_pipeline()
-        # i = MyConfigurationInfo()
-        # v = i.get_datatransformation_config()
-        # file_path = r"B:\jupyternotebook\mlboot\mlprojectpipelines\tutorial1\tutorial_project\housing\artifact\data_ingestion\2022-41-03_13-41-11\ingested_data\train\housing.csv"
-        # schema_path = r"B:\jupyternotebook\mlboot\mlprojectpipelines\tutorial1\tutorial_project\config\schema.yaml"
-        # i = DataTransformation().load_data(file_path,schema_path)
-        # return i
-    #     print(v)
+        pipeline.start()
+        pipeline.experiment
+        print(pipeline.get_experiments_status())
+        # pipeline = Pipeline(config)
+        # pipeline.run()
+        # pipeline.experiment
+        # pipeline.save_experiment()
+        # print(pipeline.get_experiments_status())
+
     except Exception as e:
         raise HousingException(e,sys) from e
 

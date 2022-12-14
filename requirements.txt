@@ -7,4 +7,5 @@ scikit-learn
 matplotlib
 evidently
 dill
+pytest-shutil
 # -e .

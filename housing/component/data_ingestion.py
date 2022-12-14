@@ -33,7 +33,7 @@ class DataIngestion:
             tgz_file_path = os.path.join(download_folder,file_name)
             
             logging.info(f"downloading file from my_download_url into [{tgz_file_path}]")
-            urllib.request.urlretrieve(my_download_url,tgz_file_path)
+            urllib.request.urlretrieve(my_download_url,tgz_file_path)#error here :)
             logging.info("data download completed successfully :) [happy face]")
             
             return tgz_file_path
@@ -43,10 +43,13 @@ class DataIngestion:
     
     def extract_tgz_file(self,tgz_file_path:str):
         try:
-            raw_data_dir = self.data_ingestion_config.extract_folder
-
+            raw_data_dir = os.path.join(self.data_ingestion_config.extract_folder)
+            stored_time = self.data_ingestion_config.stored_time_var
             if os.path.exists(raw_data_dir):
-                os.remove(raw_data_dir)
+                try:
+                    os.remove(os.path.join(raw_data_dir,"housing.csv"))
+                except Exception as e:
+                    os.remove(f'B:\\jupyternotebook\\mlboot\\mlprojectpipelines\\tutorial1\\tutorial_project\\housing\\artifact\\data_ingestion\\{stored_time}\\raw_data\\housing.csv')
             os.makedirs(raw_data_dir,exist_ok=True)
 
             logging.info(f"starting extraction process in [{raw_data_dir}]")
@@ -60,8 +63,10 @@ class DataIngestion:
     def split_data_as_train_test(self)->DataIngestionArtifact:
         try:
             raw_data_dir = self.data_ingestion_config.extract_folder
-            file_name = os.listdir(raw_data_dir)[0]
-            full_file_path = os.path.join(raw_data_dir,file_name)
+            stored_time = self.data_ingestion_config.stored_time_var
+            file_name = os.listdir(raw_data_dir)[0]#housing.csv
+            # full_file_path = os.path.join(raw_data_dir,file_name)
+            full_file_path = f"B:/jupyternotebook/mlboot/mlprojectpipelines/tutorial1/tutorial_project/housing/artifact/data_ingestion/{stored_time}/raw_data/housing.csv"
 
             logging.info(f"reading csv file from [{full_file_path}]")
             housing_data_frame = pd.read_csv(full_file_path)
@@ -102,6 +107,7 @@ class DataIngestion:
     def initiate_data_ingestion(self)->DataIngestionArtifact:
         try:
             tgz_file_path = self.download_housing_data()
+            print(tgz_file_path)
             self.extract_tgz_file(tgz_file_path=tgz_file_path)
             return self.split_data_as_train_test()
         except Exception as e:

@@ -2,7 +2,7 @@
 from collections import namedtuple
 
 #using to store the path for all the information nessasary to download the data,unziping the data,and so on... 
-DataIntegrationConfig = namedtuple("DataIntegrationConfig",["download_url","zip_folder","extract_folder","train_dataset_folder","test_dataset_folder"])
+DataIntegrationConfig = namedtuple("DataIntegrationConfig",["download_url","zip_folder","extract_folder","train_dataset_folder","test_dataset_folder","stored_time_var"])
 
 #using to store the path of the "file" which shows how much data columns and its data types are contained in the dataset
 DataValidationConfig = namedtuple("DataValidationConfig",["schema_file_path","schema_report_path","report_page_file_path"])
